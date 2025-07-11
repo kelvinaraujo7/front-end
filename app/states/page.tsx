@@ -98,7 +98,7 @@ const States = () => {
                       asChild
                       className="bg-blue-500 dark:bg-slate-400 text-white px-2 py-2 rounded-md"
                     >
-                      <Link href={`/pages/tables/${state.id}`}>
+                      <Link href={`/states/${state.id}`}>
                         <EditIcon className="w-4 h-4" />
                       </Link>
                     </Button>

@@ -126,7 +126,7 @@ const Tickets = () => {
                           asChild
                           className="bg-blue-500 dark:bg-slate-400 text-white px-2 py-2 rounded-md mr-2"
                         >
-                          <Link href={`/pages/tickets/${ticket.id}`}>
+                          <Link href={`/tickets/${ticket.id}`}>
                             <EditIcon className="w-4 h-4" />
                           </Link>
                         </Button>
@@ -143,7 +143,7 @@ const Tickets = () => {
             </TableBody>
           </Table>
         </CardContent>
-        <CardFooter>{/* Paginação, se necessário */}</CardFooter>
+        <CardFooter></CardFooter>
       </Card>
     </>
   );

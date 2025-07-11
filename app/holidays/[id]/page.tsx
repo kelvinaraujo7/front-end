@@ -81,7 +81,7 @@ const TableForm = () => {
       });
     }
 
-    router.push("/pages/holidays");
+    router.push("/holidays");
   }
 
   return (

@@ -74,7 +74,7 @@ const TableForm = () => {
         status: values.active ? "Ativo" : "Desativado",
       });
     }
-    router.push("/pages/states");
+    router.push("/states");
   }
 
   return (

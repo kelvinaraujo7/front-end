@@ -123,7 +123,7 @@ const Videos = () => {
                           asChild
                           className="bg-blue-500 dark:bg-slate-400 text-white px-2 py-2 rounded-md mr-2"
                         >
-                          <Link href={`/pages/videos/${video.id}`}>
+                          <Link href={`/videos/${video.id}`}>
                             <EditIcon className="w-4 h-4" />
                           </Link>
                         </Button>

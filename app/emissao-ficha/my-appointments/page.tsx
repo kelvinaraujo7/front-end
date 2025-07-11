@@ -69,6 +69,7 @@ const Myappointments = () => {
       departamento: "Atendimento",
       assunto: "Atualização cadastral",
       cor: "text-green-500",
+      situacao: "Aguardando na fila"
     },
     {
       dia: 17,
@@ -78,6 +79,7 @@ const Myappointments = () => {
       departamento: "Atendimento",
       assunto: "Consulta de profissionais inscritos",
       cor: "text-red-500",
+      situacao: "Não compareceu"
     },
   ];
 
@@ -167,6 +169,7 @@ const Myappointments = () => {
                               <p><strong>Hora Final:</strong> {item.horaFim}</p>
                               <p><strong>Departamento:</strong> {item.departamento}</p>
                               <p><strong>Assunto:</strong> {item.assunto}</p>
+                              <p><strong>Situação:</strong> {item.situacao}</p>
                             </DialogDescription>
                           </DialogHeader>
                         </DialogContent>
