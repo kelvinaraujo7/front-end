@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import { isBefore, startOfDay } from "date-fns";
 
 const schema = z.object({
   nome: z.string().min(2, "Nome obrigatório").regex(/^[A-Za-zÀ-ÿ\s]+$/, "Apenas letras são permitidas"),
@@ -43,6 +44,10 @@ function MyDatePicker({ selected, setSelected, onDateClick }: {
   setSelected: (date: Date | undefined) => void;
   onDateClick?: () => void;
 }) {
+  const modifiers = {
+    passed: (date: Date) => isBefore(date, startOfDay(new Date())),
+  };
+
   return (
     <div className="w-full">
       <div className="bg-[#3c4349] text-white rounded-xl px-2 sm:px-4 py-3 overflow-x-auto max-w-full dark:bg-slate-950 dark:shadow-sm dark:border-white/10 rounded-lg dark:shadow-lg dark:border">
@@ -53,15 +58,15 @@ function MyDatePicker({ selected, setSelected, onDateClick }: {
             setSelected(date);
             onDateClick?.();
           }}
-          className="w-full max-w-full [&_.rdp-nav_button_svg]:stroke-[#fcd32a] 
-          [&_.rdp-nav_button_svg]:stroke-[2]"
-         modifiersClassNames={{
-         scheduled: "bg-green-500 text-white",
-         cancelled: "bg-red-500 text-white",
-         passed: "bg-gray-500 text-white",
-         selected: " text-yellow-400 font-bold rounded-full",
-         today: " text-yellow-400 font-bold rounded-full",
-         }} 
+          className="w-full max-w-full [&_.rdp-nav_button_svg]:stroke-[#fcd32a] [&_.rdp-nav_button_svg]:stroke-[2]"
+          modifiers={modifiers}
+          modifiersClassNames={{
+            scheduled: "bg-green-500 text-white",
+            cancelled: "bg-red-500 text-white",
+            passed: "bg-gray-500 text-white",
+            selected: " text-yellow-400 font-bold rounded-full",
+            today: " text-yellow-400 font-bold rounded-full",
+          }}
         />
       </div>
       <p className="mt-2 text-sm text-center text-[#2e404e] font-semibold dark:text-white">
@@ -92,7 +97,6 @@ const SchedulingPage = () => {
     console.log("Dados validados:", { ...data, dataSelecionada: selectedDate });
     router.push("../emissao-ficha/my-appointments");
   };
-
 
   return (
     <div className="min-h-screen w-full bg-[#eeeeee] text-[#2c3e50] dark:bg-slate-950">
@@ -184,16 +188,13 @@ const SchedulingPage = () => {
                   ))}
                 </div>
                 <br />
-                 <label className=" font-semibold dark:text-white">Escolha um tipo de serviço:</label>
+                <label className=" font-semibold dark:text-white">Escolha um tipo de serviço:</label>
                 <select className="w-full p-2 rounded-md mb-6 text-black bg-[#f1f5f8]">
                   <option>Selecione um tipo de serviço </option>
                 </select>
                 {errors.servico && (
                   <p className="text-[#ff4d4d] text-sm mt-1 text-center">{errors.servico.message}</p>
                 )}
-
-
-                
               </div>
 
               {/* Data e Hora */}
