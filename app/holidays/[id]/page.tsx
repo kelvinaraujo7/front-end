@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -31,14 +32,9 @@ import { useAppData } from "../../../context/AppDataContextType ";
 const formSchema = z.object({
   name: z
     .string()
-    .min(6, {
-      message: "O nome deve ter pelo menos 6 caracteres.",
-    })
-    .max(16, {
-      message: "O nome deve ter no máximo 16 caracteres.",
-    }),
-  active: z.string(),
-
+    .min(6, { message: "O nome deve ter pelo menos 6 caracteres." })
+    .max(16, { message: "O nome deve ter no máximo 16 caracteres." }),
+  active: z.boolean(),
   dayoff: z.string().optional(),
 });
 
@@ -53,7 +49,7 @@ const TableForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      active: holiday ? holiday.active === "Ativo" : "Desativado",
+      active: holiday ? holiday.active === "Ativo" : true,
       name: holiday?.name ?? "",
       dayoff: holiday?.dayoff ?? "",
     },
@@ -89,44 +85,45 @@ const TableForm = () => {
   }
 
   return (
-    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 ml-10 mr-2 rounded-sm shadow-2xl shadow-card-foreground">
-      <CardHeader className="flex justify-between">
+    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 mx-4 rounded-sm dark:shadow-lg dark:shadow-card-foreground max-w-screen-md mx-auto">
+      <CardHeader className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <CardTitle className="font-bold text-2xl w-1/2 dark:text-white">
-            Feriados
-          </CardTitle>
-
-          <CardDescription className="mt-2">
-            Gerenciar Feriados:
-          </CardDescription>
+          <CardTitle className="font-bold text-2xl dark:text-white">Feriados</CardTitle>
+          <CardDescription className="mt-2">Gerenciar Feriados:</CardDescription>
         </div>
         <div>
           <Button
             asChild
-            className="bg-slate-500 hover:bg-slate-700 hover:text-white"
+            className="bg-slate-500 hover:bg-slate-700 hover:text-white dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white w-full sm:w-auto"
           >
-            <Link href="/pages/holidays">
+            <Link href="/holidays">
               <MoveLeft className="mr-2" />
               Voltar
             </Link>
           </Button>
         </div>
       </CardHeader>
+
       <Separator className="bg-slate-300" />
+
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-flow-row-dense grid-cols-2 grid-rows-4 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="col-span-2">
+                <FormItem className="w-full sm:col-span-2">
                   <FormLabel>Feriado:</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: Dia da Independência" {...field} />
+                    <Input
+                      placeholder="Ex: Dia da Independência"
+                      {...field}
+                      className="w-full"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,12 +139,8 @@ const TableForm = () => {
                   <FormControl>
                     <Input
                       type="date"
-                      placeholder="Ex: Dia da Independência"
-                      className="w-full text-lg  leading-6"
-                      style={{
-                        textAlign: "left",
-                        fontSize: "14px",
-                      }}
+                      className="w-full text-lg leading-6"
+                      style={{ textAlign: "left", fontSize: "14px" }}
                       {...field}
                     />
                   </FormControl>
@@ -160,7 +153,7 @@ const TableForm = () => {
               control={form.control}
               name="active"
               render={({ field }) => (
-                <FormItem className="col-span-2 mt-3 ">
+                <FormItem className="sm:col-span-2 mt-3 w-full">
                   <FormLabel>Ativo?</FormLabel>
                   <RadioGroup
                     value={field.value ? "T" : "F"}
@@ -181,10 +174,10 @@ const TableForm = () => {
               )}
             />
 
-            <div className="col-span-2 flex justify-start ">
+            <div className="sm:col-span-2 flex justify-start">
               <Button
                 type="submit"
-                className="mt-5 w-1/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-5 w-full sm:w-1/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
               >
                 Salvar
               </Button>

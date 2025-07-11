@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -31,14 +32,9 @@ import { useAppData } from "@/context/AppDataContextType ";
 const formSchema = z.object({
   description: z
     .string()
-    .min(6, {
-      message: "O nome deve ter pelo menos 6 caracteres.",
-    })
-    .max(16, {
-      message: "O nome deve ter no máximo 16 caracteres.",
-    }),
+    .min(6, { message: "O nome deve ter pelo menos 6 caracteres." })
+    .max(16, { message: "O nome deve ter no máximo 16 caracteres." }),
   active: z.string(),
-
   url: z.string().optional(),
   order: z.preprocess(
     (val) => (val === "" ? undefined : Number(val)),
@@ -73,7 +69,6 @@ const TableForm = () => {
   }, [video]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const videoData = {
       description: values.description,
       url: values.url,
@@ -84,59 +79,58 @@ const TableForm = () => {
     if (video) {
       editarVideo(video.id, videoData);
     } else {
-      adicionarVideo({
-        id: Date.now(),
-        ...videoData,
-      });
+      adicionarVideo({ id: Date.now(), ...videoData });
     }
-    router.push("/pages/videos");
+
+    router.push("/videos");
   }
 
   return (
-    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 ml-10 mr-2 rounded-sm shadow-2xl shadow-card-foreground">
-      <CardHeader className="flex justify-between">
+    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 mx-4 rounded-sm shadow-lg dark:shadow-card-foreground max-w-screen-md mx-auto">
+      <CardHeader className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <CardTitle className="font-bold text-2xl w-1/2 dark:text-white">
-            Vídeos
-          </CardTitle>
-
-          <CardDescription className="mt-5">
-            Vídeos para exibição:
-          </CardDescription>
+          <CardTitle className="font-bold text-2xl dark:text-white">Vídeos</CardTitle>
+          <CardDescription className="mt-2">Vídeos para exibição:</CardDescription>
         </div>
         <div>
           <Button
             asChild
-            className="bg-slate-500 hover:bg-slate-700 hover:text-white"
+            className="w-full sm:w-auto bg-slate-500 hover:bg-slate-700 hover:text-white dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
           >
-            <Link href="/pages/videos">
+            <Link href="/videos">
               <MoveLeft className="mr-2" />
               Voltar
             </Link>
           </Button>
         </div>
       </CardHeader>
+
       <Separator className="bg-slate-300" />
+
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-flow-row-dense grid-cols-2 grid-rows-4 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="col-span-2">
+                <FormItem className="sm:col-span-2">
                   <FormLabel>Título</FormLabel>
                   <FormControl>
-                    <Input placeholder="Título do vídeo:" {...field} />
+                    <Input
+                      placeholder="Título do vídeo:"
+                      className="w-full"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-           
+
             <FormField
               control={form.control}
               name="url"
@@ -146,12 +140,8 @@ const TableForm = () => {
                   <FormControl>
                     <Input
                       type="url"
-                      placeholder="Endereço do vídeo, exemplo: https://exemplo.com.br"
-                      className="w-full text-lg  leading-6"
-                      style={{
-                        textAlign: "left",
-                        fontSize: "14px",
-                      }}
+                      placeholder="https://exemplo.com.br"
+                      className="w-full text-sm"
                       {...field}
                     />
                   </FormControl>
@@ -165,17 +155,12 @@ const TableForm = () => {
               name="order"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ordem de exibição dos vídeos:</FormLabel>
+                  <FormLabel>Ordem de exibição:</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
-                      className="w-full text-lg  leading-6"
-                      style={{
-                        textAlign: "left",
-                        fontSize: "14px",
-                      }}
-                      {...field}
-                      placeholder="Exemplo: Vídeo 1"
+                      placeholder="Ex: 1"
+                      className="w-full text-sm"
                       {...field}
                     />
                   </FormControl>
@@ -188,7 +173,7 @@ const TableForm = () => {
               control={form.control}
               name="active"
               render={({ field }) => (
-                <FormItem className="col-span-2 mt-3 ">
+                <FormItem className="sm:col-span-2 mt-3">
                   <FormLabel>Ativo?</FormLabel>
                   <RadioGroup
                     value={field.value ? "T" : "F"}
@@ -209,11 +194,10 @@ const TableForm = () => {
               )}
             />
 
-            <div className="col-span-2 flex justify-start ">
+            <div className="sm:col-span-2 flex justify-start">
               <Button
-                
                 type="submit"
-                className="mt-5 w-1/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-5 w-full sm:w-1/4 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
               >
                 Salvar
               </Button>

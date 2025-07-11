@@ -1,4 +1,5 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -72,68 +73,71 @@ const TableForm = () => {
   }, [ticket]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const ticketData = {
+      name: values.name,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      status: values.active ? "Ativo" : "Desativado",
+    };
+
     if (ticket) {
-      editarTicket(ticket.id, {
-        name: values.name,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        status: values.active ? "Ativo" : "Desativado",
-      });
+      editarTicket(ticket.id, ticketData);
     } else {
-      adicionarTicket({
-        id: Date.now(),
-        name: values.name,
-        startDate: values.startDate,
-        endDate: values.endDate,
-        status: values.active ? "Ativo" : "Desativado",
-      });
+      adicionarTicket({ id: Date.now(), ...ticketData });
     }
+
     router.push("/pages/tickets");
   }
 
   return (
-    <Card className="bg-slate-100 dark:bg-slate-950 mb-3 ml-10 mr-2 rounded-sm shadow-2xl shadow-card-foreground">
-      <CardHeader className="flex justify-between">
+    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 mx-4 rounded-sm shadow-lg dark:shadow-card-foreground max-w-screen-md mx-auto">
+      <CardHeader className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <CardTitle className="font-bold text-2xl w-1/2 dark:text-white">
+          <CardTitle className="font-bold text-2xl dark:text-white">
             Bilhetes
           </CardTitle>
-          <CardDescription className="mt-3" >Cadastro bilhete de atendimento:</CardDescription>
+          <CardDescription className="mt-2">
+            Cadastro bilhete de atendimento:
+          </CardDescription>
         </div>
         <div>
           <Button
             asChild
-            className="bg-slate-500 hover:bg-slate-700 hover:text-white"
+            className="bg-slate-500 hover:bg-slate-700 hover:text-white dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white w-full sm:w-auto"
           >
-            <Link href="/pages/tickets">
+            <Link href="/tickets">
               <MoveLeft className="mr-2" />
               Voltar
             </Link>
           </Button>
         </div>
       </CardHeader>
+
       <Separator className="bg-slate-300" />
+
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-cols-2  gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="col-span-1 ">
+                <FormItem className="w-full sm:col-span-2">
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome do bilhete" {...field} />
+                    <Input
+                      placeholder="Nome do bilhete"
+                      {...field}
+                      className="w-full"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <br />
-     
 
             <FormField
               control={form.control}
@@ -144,12 +148,8 @@ const TableForm = () => {
                   <FormControl>
                     <Input
                       type="date"
-                      className="col-span-3"
-                      style={{
-                        textAlign: "center",
-                        fontSize: "14px",
-                      }}
-                      placeholder=""
+                      className="w-full text-sm"
+                      style={{ textAlign: "center" }}
                       {...field}
                     />
                   </FormControl>
@@ -167,8 +167,8 @@ const TableForm = () => {
                   <FormControl>
                     <Input
                       type="date"
-                      className="col-span-2"
-                      placeholder=""
+                      className="w-full text-sm"
+                      style={{ textAlign: "center" }}
                       {...field}
                     />
                   </FormControl>
@@ -181,12 +181,12 @@ const TableForm = () => {
               control={form.control}
               name="active"
               render={({ field }) => (
-                <FormItem className="col-start-1 col-span-1 mt-5">
+                <FormItem className="sm:col-span-2 mt-2">
                   <FormLabel>Ativo?</FormLabel>
                   <RadioGroup
                     value={field.value ? "T" : "F"}
                     onValueChange={(val) => field.onChange(val === "T")}
-                    className="flex space-x-4"
+                    className="flex items-center space-x-4"
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="T" id="option-t" />
@@ -201,10 +201,11 @@ const TableForm = () => {
                 </FormItem>
               )}
             />
-            <div className="col-start-1 col-span-1 mt-3 ">
+
+            <div className="sm:col-span-2 flex justify-start">
               <Button
                 type="submit"
-                className="mt-3 w-2/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-3 w-full sm:w-1/4 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
               >
                 Salvar
               </Button>

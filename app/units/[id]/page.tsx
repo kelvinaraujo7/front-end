@@ -40,7 +40,7 @@ const formSchema = z.object({
   active: z.boolean(),
 });
 
-const TableForm = () => {
+const Units = () => {
   const { units, adicionarUnit, editarUnit } = useAppData();
   const router = useRouter();
   const params = useParams();
@@ -78,42 +78,46 @@ const TableForm = () => {
         status: values.active ? "Ativo" : "Desativado",
       });
     }
-    router.push("/pages/units");
+    router.push("/units");
   }
 
   return (
-    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 ml-10 mr-2 rounded-sm shadow-2xl shadow-card-foreground">
-      <CardHeader className="flex justify-between">
+    <Card className="bg-slate-100 dark:bg-slate-950 mb-4 mx-2 md:ml-72 rounded-sm dark:shadow-lg dark:shadow-card-foreground">
+      <CardHeader className="flex flex-col md:flex-row justify-between gap-4">
         <div>
-          <CardTitle className="font-bold text-2xl w-1/2 dark:text-white">
+          <CardTitle className="font-bold text-2xl dark:text-white">
             Unidades
           </CardTitle>
-          <CardDescription className="mt-5" >Cadastro unidades de atendimento:</CardDescription>
+          <CardDescription className="mt-2">
+            Cadastro unidades de atendimento:
+          </CardDescription>
         </div>
-        <div>
+        <div className="w-full md:w-auto">
           <Button
             asChild
-            className="bg-slate-500 hover:bg-slate-700 hover:text-white"
+            className="w-full md:w-auto bg-slate-500 hover:bg-slate-700 hover:text-white dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
           >
-            <Link href="/pages/units">
+            <Link href="/units">
               <MoveLeft className="mr-2" />
               Voltar
             </Link>
           </Button>
         </div>
       </CardHeader>
+
       <Separator className="bg-slate-300" />
+
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-cols-4  gap-4"
+            className="grid grid-cols-1 md:grid-cols-4 gap-4"
           >
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem  className="col-span-3" >
+                <FormItem className="md:col-span-3">
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input
@@ -129,12 +133,12 @@ const TableForm = () => {
               control={form.control}
               name="active"
               render={({ field }) => (
-                <FormItem className="col-start-1 col-span-1 mt-3" >
+                <FormItem>
                   <FormLabel>Ativo?</FormLabel>
                   <RadioGroup
                     value={field.value ? "T" : "F"}
                     onValueChange={(val) => field.onChange(val === "T")}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-4"
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="T" id="option-t" />
@@ -149,14 +153,15 @@ const TableForm = () => {
                 </FormItem>
               )}
             />
-            <div className="col-start-1 col-span-1 mt-3" >
+
+            <div>
               <Button
-              type="submit"
-              className="mt-1 w-4/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Salvar
-            </Button>
-            </div>            
+                type="submit"
+                className="mt-2 w-full md:w-4/6 bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold py-2 px-4 rounded dark:bg-white dark:text-black dark:hover:bg-slate-700 dark:hover:text-white"
+              >
+                Salvar
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>
@@ -164,4 +169,4 @@ const TableForm = () => {
   );
 };
 
-export default TableForm;
+export default Units;

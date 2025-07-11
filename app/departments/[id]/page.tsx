@@ -105,7 +105,7 @@ const TableForm = () => {
 
   return (
     <div className="w-full min-h-screen p-4 md:pl-[250px]">
-      <Card className="bg-slate-100 dark:bg-slate-950 shadow-lg w-full">
+      <Card className="bg-slate-100  shadow-lg w-full dark:bg-slate-950 dark:border dark:border-white/10 dark:shadow-lg dark:shadow-card-foreground">
         <CardHeader className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex-1">
             <CardTitle className="text-xl sm:text-2xl font-bold dark:text-white">
@@ -119,7 +119,7 @@ const TableForm = () => {
             asChild
             className="bg-slate-600 hover:bg-slate-800 text-white whitespace-nowrap"
           >
-            <Link href="/departments" className="flex items-center gap-2">
+            <Link href="/departments" className="flex items-center gap-2 dark:bg-white dark:text-black">
               <MoveLeft className="w-4 h-4" />
               Voltar
             </Link>
@@ -236,7 +236,7 @@ const TableForm = () => {
               <div className="col-span-full mt-4">
                 <Button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold px-6 py-2"
+                  className="bg-blue-600 hover:bg-blue-800 dark:bg-slate-500 dark:hover:bg-slate-700 text-white font-bold px-6 py-2 dark:bg-white dark:text-black"
                 >
                   Salvar
                 </Button>

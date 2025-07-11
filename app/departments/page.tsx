@@ -33,7 +33,7 @@ const Departments = () => {
 
   return (
     <div className="p-4 w-full overflow-x-auto">
-      <Card className="bg-slate-100 dark:bg-slate-950 shadow-md w-full">
+      <Card className="bg-slate-100   w-full dark:bg-slate-950 dark:border dark:border-white/10 dark:shadow-lg dark:shadow-card-foreground">
         <CardHeader className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
             <CardTitle className="text-xl sm:text-2xl dark:text-white">
@@ -47,7 +47,7 @@ const Departments = () => {
             asChild
             className="bg-slate-600 hover:bg-slate-800 text-white whitespace-nowrap"
           >
-            <Link href="/departments/new" className="flex items-center gap-2">
+            <Link href="/departments/new" className="flex items-center gap-2 dark:bg-white dark:text-black dark:hover:bg-slate-700">
               <Plus size={16} />
               Novo departamento
             </Link>
